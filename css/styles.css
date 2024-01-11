@@ -1,0 +1,49 @@
+body {
+    margin: 0;
+    width: 1440px;
+    height: 696px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    list-style: none;
+    padding: 24px 156px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.gallery-item {
+    width: 360px;
+    height: 200px;
+}
+
+.gallery-link {
+    display: block;
+    text-decoration: none;
+}
+
+.gallery-image {
+    width: 360px;
+    height: 200px;
+    background: url(<path-to-image>), lightgray -76px -16.297px / 125.278% 150.297% no-repeat;
+}
+
+.basicLightbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1440px;
+    height: 696px;
+    background: rgba(46, 47, 66, 0.80);
+}
+
+
+.basicLightbox__image {
+    width: 1112px;
+    height: 640px;
+    flex-shrink: 0;
+    object-fit: cover;
+    padding: 24px 156px;
+}
