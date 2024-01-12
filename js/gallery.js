@@ -85,7 +85,7 @@ displayGallery();
 function modalClose(event, instance) {
   if (event.key === 'Escape') {
     instance.close();
-    document.removeEventListener('keydown', modalClose);
+
   }
 }
 
@@ -96,17 +96,23 @@ gallery.addEventListener('click', e => {
     const largeImageSrc = clickedLink.dataset.source;
     const description = clickedLink.dataset.description;
 
+    const handleKeyDown = (event) => modalClose(event, instance);
+
     const instance = basicLightbox.create(`
       <img src="${largeImageSrc}" alt="${description}">
     `, {
-      onShow: (instance) => {
-        document.addEventListener('keydown', (event) => modalClose(event, instance));
+      
+      onShow: () => {
+        document.addEventListener('keydown', handleKeyDown);
       },
-      onClose: (instance) => {
-        document.removeEventListener('keydown', (event) => modalClose(event, instance));
+      
+      onClose: () => {
+        document.removeEventListener('keydown', handleKeyDown);
       }
     });
 
+    
     instance.show();
   }
 });
+
