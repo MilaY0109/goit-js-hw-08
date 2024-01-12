@@ -69,52 +69,44 @@ const images = [
 
 const gallery = document.querySelector('.gallery');
 
-function createGalleryItem(item) {
-    return `<li class="gallery-item">
-      <a class="gallery-link" href="${item.original}">
-        <img
-          class="gallery-image"
-          src="${item.preview}"
-          data-source="${item.original}"
-          alt="${item.description}"
-        />
-      </a>
-    </li>`;
-}
 
-function createGalleryList(items) {
-    return items.map(createGalleryItem).join('');
-}
+const createGalleryList = images.map(({ original, preview, description }) =>
+  `<li class="gallery-item">
+    <a class="gallery-link" href="${original}">
+      <img class="gallery-image" src="${preview}" data-source="${original}" alt="${description}" />
+    </a>
+  </li>`
+).join('');
 
 function displayGallery() {
-    const galleryContent = createGalleryList(images);
-    gallery.innerHTML = galleryContent;
+  const galleryContent = createGalleryList;
+  gallery.innerHTML = galleryContent;
 }
 displayGallery();
 
 function modalClose(event, instance) {
-    if (event.key === 'Escape') {
-        instance.close();
-        document.removeEventListener('keydown', modalClose);
-    }
+  if (event.key === 'Escape') {
+    instance.close();
+    document.removeEventListener('keydown', (event) => modalClose(event, instance));
+  }
 }
 
 gallery.addEventListener('click', e => {
-    e.preventDefault();
-    const targetImage = e.target.closest('.gallery-link');
-    if (targetImage) {
-        const largeImageSrc = targetImage.querySelector('.gallery-image').dataset.source;
+  e.preventDefault();
+  const clickedLink = e.target.closest('.gallery-link');
+  if (clickedLink) {
+    const largeImageSrc = clickedLink.querySelector('.gallery-image').dataset.source;
 
-        const instance = basicLightbox.create(`
-          <img src="${largeImageSrc}" alt="Large Image">
-        `, {
-            onClose: (instance) => {
-                document.removeEventListener('keydown', (event) => modalClose(event, instance));
-            }
-        });
+    const instance = basicLightbox.create(`
+      <img src="${largeImageSrc}" alt="Large Image">
+    `, {
+      onClose: (instance) => {
+        document.removeEventListener('keydown', (event) => modalClose(event, instance));
+      }
+    });
 
-        instance.show();
+    instance.show();
 
-        document.addEventListener('keydown', (event) => modalClose(event, instance));
-    }
+    document.addEventListener('keydown', (event) => modalClose(event, instance));
+  }
 });
