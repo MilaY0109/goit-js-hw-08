@@ -47,3 +47,8 @@ body {
     object-fit: cover;
     padding: 24px 156px;
 }
+
+.basicLightbox__placeholder>img:first-child:last-child {
+    width: 1112px;
+    height: 640px;
+}
